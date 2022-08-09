@@ -25,7 +25,7 @@ import java.util.List;
                                 // 쓰기작업 있는 메서드만 @Transactional 추가로 세팅하는걸 권장
 //@AllArgsConstructor // 필드를 가지고 생성자를 만들어줌
 @RequiredArgsConstructor // final이 있는 필드만 가지고 생성자를 만들어줌 (가장 권장되는 방법)
-public class MemberService {
+public class MemberService { // ctrl + shift + T로 테스트 생성
 
     /**
      * Field Injection
