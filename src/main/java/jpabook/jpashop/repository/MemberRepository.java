@@ -1,10 +1,10 @@
 package jpabook.jpashop.repository;
 
 import jpabook.jpashop.domain.Member;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
 /**
@@ -19,16 +19,23 @@ import java.util.List;
  * 2022/08/09        kanghyun Kim      최초 생성
  */
 @Repository //컴포넌트 스캔에 의해 자동으로 빈 관리가 됨(안에 @Component있음)
+@RequiredArgsConstructor
 public class MemberRepository {
 
-    @PersistenceContext // Jpa 표준 어노테이션으로 스프링이 EntityManager를  만들어 Injection 해줌
-    private EntityManager em;
+    private final EntityManager em;
+    // Jpa 표준 어노테이션으로 스프링이 EntityManager를  만들어 Injection 해줌
+    // Spring boot 라이브러리, data jpa 쓰면 PersistenceContext 대신 Constructor Injection 하듯 가능
+//    @PersistenceContext
+//    private EntityManager em;
 
 //    @PersistenceUnit // EntityManagerFactory를 주입받고 싶을 때 씀(거의안씀)
 //    private EntityManagerFactory emf;
 
     public void save(Member member){
-        em.persist(member); // 영속성컨택스트에 member 객체 넣음(트랜잭션 커밋시 저장)
+        // 영속성컨택스트에 member 객체 넣음(트랜잭션 커밋시 저장)
+        // @Id 값이 database의 PK가 됨
+        // persist시 id값이 항상 생성되있는게 보장이됨
+        em.persist(member);
     }
 
     public Member findOne(Long id) {
