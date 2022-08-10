@@ -1,6 +1,8 @@
 package jpabook.jpashop.domain;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -24,6 +26,7 @@ import static javax.persistence.FetchType.LAZY;
 @Entity
 @Table(name = "orders")
 @Getter @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED) // new로 생성 못하게 막는 로직 추가
 public class Order {
 
     @Id
@@ -79,6 +82,10 @@ public class Order {
     }
 
     //==비즈니스 로직==//
+//    엔티티가 비즈니스 로직을 가지고 객체 지향의 특성을 적극 활용하는 것을
+//    도메인 모델 패턴(http://martinfowler.com/eaaCatalog/domainModel.html)이라 한다.
+//    반대로 엔티티에는 비즈니스 로직이 거의 없고 서비스 계층에서 대부분의 비즈니스 로직을
+//    처리하는 것을 트랜잭션 스크립트 패턴(http://martinfowler.com/eaaCatalog/transactionScript.html)이라 한다.
     /**
      * 주문 취소
      */
