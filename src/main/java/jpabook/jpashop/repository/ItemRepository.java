@@ -28,7 +28,7 @@ public class ItemRepository {
         if (item.getId() == null) { // 처음 저장할땐 아이디가 없다(신규등록)
             em.persist(item);
         } else { // 아이디가 있으면 update비슷하게 처리
-            em.merge(item);
+            em.merge(item); // 실무에서 거의 쓸일이 없다?
         }
     }
 
