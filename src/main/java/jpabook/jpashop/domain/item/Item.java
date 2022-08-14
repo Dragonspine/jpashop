@@ -9,6 +9,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 /**
  * packageName    : jpabook.jpashop.domain
  * fileName       : Item
@@ -21,6 +23,8 @@ import java.util.List;
  * 2022/08/07        kanghyun Kim      최초 생성
  */
 @Entity
+// 단일 테이블 전략
+// 하위 클래스(Album, Book, Movie)를 Item과 한 테이블에 저장 후 dtype으로 구분
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "dtype")
 @Getter @Setter
