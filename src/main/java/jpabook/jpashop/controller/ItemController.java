@@ -73,16 +73,27 @@ public class ItemController {
     }
 
     @PostMapping("/items/{itemId}/edit")
-    public String updateItem(BookForm form) {
-        Book book = new Book();
-        book.setId(form.getId());
-        book.setName(form.getName());
-        book.setPrice(form.getPrice());
-        book.setStockQuantity(form.getStockQuantity());
-        book.setAuthor(form.getAuthor());
-        book.setIsbn(form.getIsbn());
+    public String updateItem(@PathVariable("itemId") Long itemId, BookForm form) {
+//        // 이미 DB에 한번 저장되어 식별자가 존재하면 준영속 엔티티로 볼 수 있다
+//        // 준영속 엔티티는 itemService.saveItem 엑션이 없으면 DB에 업데이트가 되지 않는다.
+//        Book book = new Book(); // new로 생성한 엔티티는 set을 해도 DB업데이트가 안됨
+//                                // (itemRepository.findOne 처럼 가져와야 영속성을 가짐)
+//        book.setId(form.getId());
+//        book.setName(form.getName());
+//        book.setPrice(form.getPrice());
+//        book.setStockQuantity(form.getStockQuantity());
+//        book.setAuthor(form.getAuthor());
+//        book.setIsbn(form.getIsbn());
+//
+//        itemService.saveItem(book); // itemRepository.save 시 em.merge 가 호출됨
+//        // merge호출시 파라미터로 넘어온 준영속 엔티티의 식별자 값으로 1차 캐시에서 엔티티를 조회
+//        // 캐시에 없으면 DB에서 조회하여 1차 캐시에 저장
+//        // 조회한 영속 엔티티를 파라미터의 준영속 엔티티 값으로 다 바꿔치기 해서 update함
 
-        itemService.saveItem(book);
+        // BookForm은 웹계층에서 쓰는 데이터라 itemService로 BookForm을 가져가면 지저분해짐,
+        // 필요한 파라미터만 가져가서 쓰는 아래 로직이 더 나음
+        // 파라미터 너무 많으면 UpdateItemDto 같은거 만들어서 쓰자
+        itemService.updateItem(itemId, form.getPrice(), form.getName(), form.getStockQuantity());
         return "redirect:/items";
     }
 }
