@@ -37,7 +37,7 @@ public class OrderService {
      */
     @Transactional
     public Long order(Long memberId, Long itemId, int count) {
-
+        //서비스에서는 Transaction 안에서 엔티티를 조회해야 영속상태에서 진행 가능
         //엔티티 조회
         Member member = memberRepository.findOne(memberId);
         Item item = itemRepository.findOne(itemId);
